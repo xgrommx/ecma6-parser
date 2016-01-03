@@ -9,19 +9,18 @@ import Parse.SourceCharacter (sourceCharacter)
 import Parse.Whitespace (lineTerminator)
 import Parse.Language (symbol)
 
---comment :: Stream s m Char => ParsecT s u m [Char]
+comment :: Stream s m Char => ParsecT s u m ()
 comment = singleLineComment <|> multiLineComment
 
---singleLineComment :: Stream s m Char => ParsecT s u m [Char]
+singleLineComment :: Stream s m Char => ParsecT s u m ()
 singleLineComment = try $ do
     count 2 (char '/')
     manyTill sourceCharacter lineTerminator
+    return ()
 
---TODO: Does this follow the spec?
---answer: no.
---multiLineComment :: Stream s m Char => ParsecT s u m [Char]
-multiLineComment = try $ do
-    symbol "/*"
-    cs <- multiLineComment <|> (manyTill sourceCharacter $ symbol "*/")
-    symbol "*/"
-    return cs
+multiLineComment :: Stream s m Char => ParsecT s u m ()
+multiLineComment = do
+    string "/*"
+    manyTill sourceCharacter $ try (string "*/")
+    return ()
+
