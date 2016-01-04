@@ -52,6 +52,12 @@ reservedOp = T.reservedOp lexer
 charLiteral = T.charLiteral lexer
 stringLiteral = T.stringLiteral lexer
 
+octal = T.octal lexer
+hexadecimal = T.hexadecimal lexer
+float = T.float lexer
+integer = T.integer lexer
+decimal = T.decimal lexer
+
 braces = T.braces lexer
 brackets = T.brackets lexer
 parens = T.parens lexer
