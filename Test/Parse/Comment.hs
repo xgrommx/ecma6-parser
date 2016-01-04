@@ -6,14 +6,13 @@ import Text.Parsec.Error as TPE
 
 import Parse.Comment (multiLineComment)
 
+import Test.Parse.Helpers (parseTest)
+
 main = HU.runTestTT tests
 
 tests = TestList
     [ TestLabel "Multiline Comment" testMultiLineComment
     ]
-
-parseTest :: (Eq a, Show a) => [Char] -> a -> Either ParseError a -> Test
-parseTest msg e = TestCase . either (HU.assertFailure . show) (HU.assertEqual msg e)
 
 testMultiLineComment :: Test
 testMultiLineComment =
